@@ -1,3 +1,6 @@
+<?php
+  session_start();
+?>
 <html>
   <!-- [START csslink] -->
   <head>
@@ -20,6 +23,7 @@
         <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
         <ul class="right hide-on-med-and-down">
           <li><a href="settings.php">Settings</a></li>
+          <li><a href="#" id="state"></a></li>
         </ul>
         <ul class="side-nav" id="mobile-demo">
           <li><a href="settings.php">Settings</a></li>
@@ -28,6 +32,34 @@
     </nav>
   </body>
   <script type="text/javascript">
-     $(".button-collapse").sideNav();
+    $(".button-collapse").sideNav();
+    function check(){
+      $.ajax({
+        type: "POST",
+        url: "get_session.php",
+        success: function(data){
+          // alert(data);
+          // alert("session set");
+          if(data=="connected")
+          {
+            $("#useralert").hide();
+            $("#state").removeClass("green");
+            $("#state").removeClass("red");
+            $("#state").removeClass("blue");
+            $("#state").addClass("green");
+            $("#state").html("Connected");
+          }
+          else
+          {
+            $("#state").removeClass("red");
+            $("#state").removeClass("blue");
+            $("#state").removeClass("green");
+            $("#state").addClass("red");
+            $("#state").html("Not Connected");
+          }
+        }
+      });
+    }
+    setInterval(check, 2*1000);
   </script>
 </html>

@@ -88,8 +88,8 @@
         </div>
         <div class="row">
           <div class="input-field col s6 offset-s3">
-            <input id="reftime" name="reftime" type="number" class="validate" value="1">
-            <label for="reftime">Refresh Time(in hrs)</label>
+            <input id="reftime" name="reftime" type="number" class="validate" value="1" min="0">
+            <label for="reftime">Refresh Time(in mins)</label>
           </div>
         </div>
         <div class="center">
@@ -104,17 +104,50 @@
     $(document).ready(function(){
       $('.tooltipped').tooltip({delay: 50});
     });
-
+    $(document).ready(function(){
+      $.ajax({
+        type: "POST",
+        url: "get_session.php",
+        success: function(data){
+          // alert(data);
+          // alert("session set");
+          if(data=="connected")
+          {
+            $("#useralert").hide();
+            $("#btn_submit").removeClass("green");
+            $("#btn_submit").removeClass("red");
+            $("#btn_submit").removeClass("blue");
+            $("#btn_submit").addClass("green");
+            document.getElementById("btn_submit").value = "Connected";
+          }
+          else
+          {
+            $("#btn_submit").removeClass("red");
+            $("#btn_submit").removeClass("blue");
+            $("#btn_submit").removeClass("green");
+            $("#btn_submit").addClass("red");
+            document.getElementById("btn_submit").value = "Not Connected";
+          }
+        }
+      });
+    });
     $(".button-collapse").sideNav();
     $("#myform").submit(function(event){
       event.preventDefault();
-      //alert("submit");
+      submit();
+    });
+    $("input").change(function(){
+        submit();
+    });
+    function submit()
+    {
       var server=$("#server").val();
       var username=$("#username").val();
       var password=$("#password").val();
       var dbname=$("#dbname").val();
       var tablename=$("#tablename").val();
-      var f1=0,f2=0,f3=0,f4=0,f5=0;
+      var reftime=$("#reftime").val();
+      var f1=0,f2=0,f3=0,f4=0,f5=0,f6=0;
       if(server==""){
         f1=1;
       }else{
@@ -140,8 +173,13 @@
       }else{
         f5=0;
       }
-      if(f1==0 && f2==0 && f3==0 && f4==0 && f5==0){
-        //alert("post");
+      if(reftime=="")
+      {
+        f6=1;
+      }else{
+        f6=0;
+      }
+      if(f1==0 && f2==0 && f3==0 && f4==0 && f5==0 && f6==0){
         $("#useralert").hide();
         var inp=$("#myform").serialize();
         $.ajax({
@@ -154,49 +192,82 @@
             {
               $("#useralert").hide();
               // Materialize.toast('Server database mirrored successfully!', 4000,"rounded");
+              $("#btn_submit").removeClass("green");
+              $("#btn_submit").removeClass("red");
+              $("#btn_submit").removeClass("blue");
               $("#btn_submit").addClass("green");
               document.getElementById("btn_submit").value = "Connected";
+              var input="state=connected";
+              $.ajax({
+                type: "POST",
+                url: "set_session.php",
+                data:input,
+                success: function(data){
+                  // alert(data);
+                  // alert("session set");
+                }
+              });
+              $.ajax({
+                type: "POST",
+                url: "get_session.php",
+                success: function(data){
+                  // alert(data);
+                  // alert("session set");
+                }
+              });
             }
             else
             {
               // Materialize.toast('Connection Failed!', 4000);
+              $("#btn_submit").removeClass("red");
+              $("#btn_submit").removeClass("blue");
+              $("#btn_submit").removeClass("green");
               $("#btn_submit").addClass("red");
               document.getElementById("btn_submit").value = "Not Connected";
+              var input="state=not connected";
+              $.ajax({
+                type: "POST",
+                url: "set_session.php",
+                data:input,
+                success: function(data){
+                  // alert(data);
+                  // alert("session set");
+                }
+              });
+              $.ajax({
+                type: "POST",
+                url: "get_session.php",
+                success: function(data){
+                  // alert(data);
+                  // alert("session set");
+                }
+              });
             }
           }
         });
       }
-    });
-    function submit()
-    {
-      if(document.getElementById("btn_submit").value == "Connected")
+      else
       {
-        $("#useralert").hide();
-        var inp=$("#myform").serialize();
+        $("#useralert").show();
+        $("#btn_submit").removeClass("red");
+        $("#btn_submit").removeClass("blue");
+        $("#btn_submit").removeClass("green");
+        $("#btn_submit").addClass("red");
+        document.getElementById("btn_submit").value = "Not Connected";
+        var input="state=not connected";
         $.ajax({
           type: "POST",
-          url: "connection.php",
-          data: inp,
+          url: "set_session.php",
+          data:input,
           success: function(data){
             // alert(data);
-            if(data=="success")
-            {
-              $("#useralert").hide();
-              // Materialize.toast('Server database mirrored successfully!', 4000,"rounded");
-              $("#btn_submit").addClass("green");
-              document.getElementById("btn_submit").value = "Connected";
-            }
-            else
-            {
-              // Materialize.toast('Connection Failed!', 4000);
-              $("#btn_submit").removeClass("green");
-              $("#btn_submit").addClass("red");
-              document.getElementById("btn_submit").value = "Not Connected";
-            }
+            // alert("session set");
           }
         });
       }
     }
-    setInterval(submit, 10000);
+
+    var t=$("#reftime").val();
+    setInterval(submit, t*60*1000);
   </script>
 </html>

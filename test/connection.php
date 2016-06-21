@@ -1,8 +1,8 @@
 <?php
+	session_start();
 	//connection settings for server database coming from settings.php
 	$link1=mysqli_connect($_POST['server'],$_POST['username'],$_POST['password'],$_POST['dbname']);
 	// $link1=mysqli_connect("motherbeeTest.db.8914663.hostedresource.com","motherbeeTest","qwertY@12","motherbeeTest");
-	
 	//connection settings of local database
 	$link2=mysqli_connect("localhost","root","","motherbeetest");
 	$c=0;
