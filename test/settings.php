@@ -137,6 +137,7 @@
       submit();
     });
     $("input").change(function(){
+      event.preventDefault();
         submit();
     });
     function submit()
@@ -184,7 +185,7 @@
         var inp=$("#myform").serialize();
         $.ajax({
           type: "POST",
-          url: "connection.php",
+          url: "connect.php",
           data: inp,
           success: function(data){
             // alert(data);
@@ -197,24 +198,16 @@
               $("#btn_submit").removeClass("blue");
               $("#btn_submit").addClass("green");
               document.getElementById("btn_submit").value = "Connected";
-              var input="state=connected";
-              $.ajax({
-                type: "POST",
-                url: "set_session.php",
-                data:input,
-                success: function(data){
-                  // alert(data);
-                  // alert("session set");
-                }
-              });
-              $.ajax({
-                type: "POST",
-                url: "get_session.php",
-                success: function(data){
-                  // alert(data);
-                  // alert("session set");
-                }
-              });
+              // var input="state=connected";
+              // $.ajax({
+              //   type: "POST",
+              //   url: "set_session.php",
+              //   data:input,
+              //   success: function(data){
+              //     // alert(data);
+              //     // alert("session set");
+              //   }
+              // });
             }
             else
             {
@@ -224,24 +217,24 @@
               $("#btn_submit").removeClass("green");
               $("#btn_submit").addClass("red");
               document.getElementById("btn_submit").value = "Not Connected";
-              var input="state=not connected";
-              $.ajax({
-                type: "POST",
-                url: "set_session.php",
-                data:input,
-                success: function(data){
-                  // alert(data);
-                  // alert("session set");
-                }
-              });
-              $.ajax({
-                type: "POST",
-                url: "get_session.php",
-                success: function(data){
-                  // alert(data);
-                  // alert("session set");
-                }
-              });
+              // var input="state=not connected";
+              // $.ajax({
+              //   type: "POST",
+              //   url: "set_session.php",
+              //   data:input,
+              //   success: function(data){
+              //     // alert(data);
+              //     // alert("session set");
+              //   }
+              // });
+              // $.ajax({
+              //   type: "POST",
+              //   url: "get_session.php",
+              //   success: function(data){
+              //     alert(data);
+              //     // alert("session set");
+              //   }
+              // });
             }
           }
         });
@@ -255,15 +248,15 @@
         $("#btn_submit").addClass("red");
         document.getElementById("btn_submit").value = "Not Connected";
         var input="state=not connected";
-        $.ajax({
-          type: "POST",
-          url: "set_session.php",
-          data:input,
-          success: function(data){
-            // alert(data);
-            // alert("session set");
-          }
-        });
+        // $.ajax({
+        //   type: "POST",
+        //   url: "set_session.php",
+        //   data:input,
+        //   success: function(data){
+        //     // alert(data);
+        //     // alert("session set");
+        //   }
+        // });
       }
     }
 
