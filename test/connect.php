@@ -1,6 +1,6 @@
 <?php
 	session_start();
-	$link2=mysqli_connect("localhost","root","","motherbeetest");
+	$link2=mysqli_connect("localhost","cl56-leads-3tx","jmD^e/4-^","cl56-leads-3tx");
 	//connection settings for server database coming from settings.php
 	// if(isset($_POST))
 	// {
@@ -21,8 +21,8 @@
 	
 	$c=0;
 
-	// $table=$_POST['tablename'];
-	$table="services_leads";
+	$table=$_POST['tablename'];
+	// $table="services_leads";
 	$result = mysqli_query($link1,"SELECT * FROM $table") or die(mysqli_error($link1)); // select all content	
 	if(!$result)
 	{
@@ -39,10 +39,10 @@
 		// print_r($row);
 		while ($row = mysqli_fetch_array($result) ) {		
 			// print_r($row);
-			if($row['registered_date']>=$r['reg_date'])
+			if($r AND $row['registered_date']>$r['reg_date'])
 			{
-				// echo "true";
-				$res=mysqli_query($link2,"REPLACE INTO `contacts`   VALUES (".$row['id'].",'".$row['name']."','".$row['email']."',".$row['phone'].",'".$row['registered_date']."','".$row['weeks']."')") or die(mysqli_error($link2)); 
+			//echo "true";
+				$res=mysqli_query($link2,"REPLACE INTO `contacts` (`name`,`email`,`phone`,`reg_date`,`due date`)   VALUES ('".$row['name']."','".$row['email']."',".$row['phone'].",'".$row['registered_date']."','".$row['weeks']."')") or die(mysqli_error($link2)); 
 			    if(!$res)
 			    {
 			    	echo "error";
@@ -51,7 +51,8 @@
 			}	
 			if(!$r)
 			{
-				$res=mysqli_query($link2,"INSERT INTO `contacts`   VALUES (".$row['id'].",'".$row['name']."','".$row['email']."',".$row['phone'].",'".$row['registered_date']."','".$row['weeks']."')") or die(mysqli_error($link2)); 
+                                //echo "error at insert";
+				$res=mysqli_query($link2,"INSERT INTO `contacts` (`name`,`email`,`phone`,`reg_date`,`due date`)   VALUES ('".$row['name']."','".$row['email']."',".$row['phone'].",'".$row['registered_date']."','".$row['weeks']."')") or die(mysqli_error($link2)); 
 			    if(!$res)
 			    {
 			    	echo "error";

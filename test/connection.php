@@ -7,8 +7,9 @@
 	// }
 	// else
 	// {
-	$link2=mysqli_connect("localhost","root","","motherbeetest");
-		$link1=mysqli_connect("motherbeeTest.db.8914663.hostedresource.com","motherbeeTest","qwertY@12","motherbeeTest");
+	// $link2=mysqli_connect("localhost","root","","motherbeetest");
+	$link2=mysqli_connect("localhost","cl56-leads-3tx","jmD^e/4-^","cl56-leads-3tx");
+	$link1=mysqli_connect("motherbeeTest.db.8914663.hostedresource.com","motherbeeTest","qwertY@12","motherbeeTest");
 	// }
 	//connection settings of local database
 	$c=0;

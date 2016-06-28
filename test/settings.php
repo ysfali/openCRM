@@ -34,6 +34,18 @@
         right: 41%;
         left: 40%; } }
 
+        #check{
+          color: #4caf50;
+          font-size: 50px;
+          width: 200px;
+        }
+
+        #cross{
+          color: #f44336;
+          font-size: 50px;
+          width: 200px;
+        }
+
     </style>
   </head>
   <!-- [END csslink] -->
@@ -61,6 +73,8 @@
             <input id="server" name="server" type="text" class="validate" value="motherbeeTest.db.8914663.hostedresource.com">
             <label for="server">Server Name</label>
           </div>
+          <i class="material-icons right" id="check">check_circle</i>
+          <i class="material-icons right" id="cross">warning</i>
         </div>
         <div class="row">
           <div class="input-field col s6 offset-s3">
@@ -104,6 +118,8 @@
     $(document).ready(function(){
       $('.tooltipped').tooltip({delay: 50});
     });
+    $("#check").hide();
+    $("#cross").hide();
     $(document).ready(function(){
       $.ajax({
         type: "POST",
@@ -119,6 +135,8 @@
             $("#btn_submit").removeClass("blue");
             $("#btn_submit").addClass("green");
             document.getElementById("btn_submit").value = "Connected";
+            $("#check").show();
+            $("#cross").hide();
           }
           else
           {
@@ -127,6 +145,8 @@
             $("#btn_submit").removeClass("green");
             $("#btn_submit").addClass("red");
             document.getElementById("btn_submit").value = "Not Connected";
+            $("#check").hide();
+            $("#cross").show();
           }
         }
       });
@@ -188,7 +208,7 @@
           url: "connect.php",
           data: inp,
           success: function(data){
-            // alert(data);
+            //alert(data);
             if(data=="success")
             {
               $("#useralert").hide();
@@ -198,6 +218,9 @@
               $("#btn_submit").removeClass("blue");
               $("#btn_submit").addClass("green");
               document.getElementById("btn_submit").value = "Connected";
+              $("#check").show();
+              $("#cross").hide();
+
               // var input="state=connected";
               // $.ajax({
               //   type: "POST",
@@ -217,6 +240,8 @@
               $("#btn_submit").removeClass("green");
               $("#btn_submit").addClass("red");
               document.getElementById("btn_submit").value = "Not Connected";
+              $("#check").hide();
+              $("#cross").show();
               // var input="state=not connected";
               // $.ajax({
               //   type: "POST",
@@ -248,6 +273,7 @@
         $("#btn_submit").addClass("red");
         document.getElementById("btn_submit").value = "Not Connected";
         var input="state=not connected";
+        $("#check").hide();
         // $.ajax({
         //   type: "POST",
         //   url: "set_session.php",
