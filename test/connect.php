@@ -1,6 +1,8 @@
 <?php
 	session_start();
-	$link2=mysqli_connect("localhost","cl56-leads-3tx","jmD^e/4-^","cl56-leads-3tx");
+	// $link2=mysqli_connect("localhost","cl56-leads-3tx","jmD^e/4-^","cl56-leads-3tx");
+	
+	$link2=mysqli_connect("localhost","root","","motherbeetest");
 	//connection settings for server database coming from settings.php
 	// if(isset($_POST))
 	// {

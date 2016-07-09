@@ -7,12 +7,21 @@
 	// }
 	// else
 	// {
-	// $link2=mysqli_connect("localhost","root","","motherbeetest");
-	$link2=mysqli_connect("localhost","cl56-leads-3tx","jmD^e/4-^","cl56-leads-3tx");
+	$link2=mysqli_connect("localhost","root","","motherbeetest");
+	// $link2=mysqli_connect("localhost","cl56-leads-3tx","jmD^e/4-^","cl56-leads-3tx");
 	$link1=mysqli_connect("motherbeeTest.db.8914663.hostedresource.com","motherbeeTest","qwertY@12","motherbeeTest");
 	// }
 	//connection settings of local database
 	$c=0;
+<<<<<<< HEAD
+
+	$table=$_POST['tablename'];
+
+	$latest = "SELECT `reg_date` from `contacts` ORDER BY `reg_date` DESC LIMIT 1"; // select the latest lead in mirror, 
+	//echo $latest; 
+
+	$result = mysqli_query($link1,"SELECT * FROM $table where `registered_date` > $latest") or die(mysqli_error($link1)); // select all content	
+=======
 if (mysqli_connect_errno())
 	  {
 	  	echo "Failed to connect to MySQL: " . mysqli_connect_error();
@@ -23,6 +32,7 @@ if (mysqli_connect_errno())
 	// $table=$_POST['tablename'];
 	$table="services_leads";
 	$result = mysqli_query($link1,"SELECT * FROM $table") or die(mysqli_error($link1)); // select all content	
+>>>>>>> 743fa5dd898baa30c683f471e5812861c450893f
 	if(!$result)
 	{
 		$c=1;

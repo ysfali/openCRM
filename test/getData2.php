@@ -1,8 +1,10 @@
 <?php
     
+    //  this chart loads the second chart ,, 
     //open connection to mysql db
     // $connection = mysqli_connect("localhost","root","*****","motherbeetest") or die("Error " . mysqli_error($connection));
     $connection=mysqli_connect("localhost","root","","motherbeetest") or die("Error " . mysqli_error($connection));
+
     // now updating numweeks column  for a given lead,, 
 
     
@@ -10,16 +12,16 @@
 
     // now updating numweeks column  for a given lead,, 
 
-    $numweeks = "UPDATE `contacts` SET `numWeeks` = CEILING(DATEDIFF(contacts.`due date`, CURDATE())/7)";  
+    $numMonths = "UPDATE `contacts` SET `numMonths` = CEILING(DATEDIFF(CURDATE(), contacts.`due date`)/30)";  
 
-    $updatenumWeeks = mysqli_query($connection, $numweeks) or die("Error updating numweeks "  . mysqli_error($connection));
+    $updatenumMonths = mysqli_query($connection, $numMonths) or die("Error updating numweeks "  . mysqli_error($connection));
 
     $trigger = "DELIMITER $$
                 CREATE TRIGGER updtrigger  AFTER UPDATE
                     ON `contacts` FOR EACH ROW
                 BEGIN
-                    IF (NEW.numWeeks <> OLD.numWeeks) THEN
-                        SET numWeeksChanged = true;     
+                    IF (NEW.numMonths <> OLD.numMonths) THEN
+                        SET numMonthsChanged = true;     
                     END IF;
                 END;    
                 $$";
@@ -29,7 +31,7 @@
     //echo $triggerUpdate;
 
     //fetch table rows from mysql db
-    $sql = "select numWeeks, id , numWeeksChanged,name, email, phone from `contacts` where numWeeks > 0";
+    $sql = "select numMonths, id , numMonthsChanged,name, email, phone from `contacts` where numMonths > 0";
     $result = mysqli_query($connection, $sql) or die("Error in Selecting " . mysqli_error($connection));
 
     
