@@ -3,33 +3,12 @@
     //open connection to mysql db
     // $connection = mysqli_connect("localhost","root","*****","motherbeetest") or die("Error " . mysqli_error($connection));
     $connection=mysqli_connect("localhost","root","","motherbeetest") or die("Error " . mysqli_error($connection));
-    // now updating numweeks column  for a given lead,, 
 
     
     //$connection =mysqli_connect("localhost","cl56-leads-3tx","jmD^e/4-^","cl56-leads-3tx");
 
-    // now updating numweeks column  for a given lead,, 
-
-    $numweeks = "UPDATE `contacts` SET `numWeeks` = CEILING(DATEDIFF(contacts.`due date`, CURDATE())/7)";  
-
-    $updatenumWeeks = mysqli_query($connection, $numweeks) or die("Error updating numweeks "  . mysqli_error($connection));
-
-    $trigger = "DELIMITER $$
-                CREATE TRIGGER updtrigger  AFTER UPDATE
-                    ON `contacts` FOR EACH ROW
-                BEGIN
-                    IF (NEW.numWeeks <> OLD.numWeeks) THEN
-                        SET numWeeksChanged = true;     
-                    END IF;
-                END;    
-                $$";
-
-
-    $triggerUpdate = mysqli_query($connection, $trigger);
-    //echo $triggerUpdate;
-
     //fetch table rows from mysql db
-    $sql = "select numWeeks, id , numWeeksChanged,name, email, phone from `contacts` where numWeeks > 0";
+    $sql = "select numWeeks, id , numWeeksChanged,name, email, phone from `contacts` where numWeeks > 0 and numWeeks < 41";
     $result = mysqli_query($connection, $sql) or die("Error in Selecting " . mysqli_error($connection));
 
     
@@ -42,8 +21,6 @@
     }
    // echo json_encode($emparray);
  //   echo  $emparray[3]['weeks'];
-
-
 
   
     //write to json file

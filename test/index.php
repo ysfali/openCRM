@@ -147,18 +147,25 @@
                 async: false
               }).responseText;
               // alert(week);
+              var inp2="week="+week;
+              var mail=$.ajax({
+                type: "POST",
+                url: "getMailText.php",
+                data: inp2,
+                dataType: 'text',
+                async: false
+              }).responseText;
+              // alert(mail);
               var modalhtml='<div class="modal-content">'+
                               '<h4 class="center">Mail</h4>'+
-                              '<h5>To : '+name+'<h5>'+
-                              '<form method="post">'+
+                              '<form method="post" id="myform" action="email.php">'+
                               '<div class="row">'+
+                              '<div class="input-field"><label for="email">To</label><input id="name" name="name" type="text" class="validate" value="'+name+'"></div>'+
                               '<div class="input-field"><label for="email">Email</label><input id="email" name="email" type="email" class="validate" value="'+email+'"></div>'+
-                              '<div class="input-field"><label for="mail-body">Mail Body</label><textarea id="mail-body" class="materialize-textarea"></textarea></div>'+
+                              '<div class="input-field"><label for="message">Mail Body</label><textarea name="message" id="message" class="materialize-textarea">'+mail+'</textarea></div>'+
+                              '<div class="center"><input href="#" id="btn_submit" type="submit" class="btn" value="Send" name="submit"/></div>'+
                               '</div>'+
                               '</form>'+
-                              '</div>'+
-                              '<div class="row">'+
-                              '<div class="center"><input href="#" id="btn_submit" type="submit" class="btn" value="Send" name="submit"/></div>'+
                               '</div>';
               $('#modal1').html(modalhtml);
               $('#modal1').openModal();
@@ -359,14 +366,27 @@
           </div>
     </footer>
 
-
-            
-
-
-
   </body>
   <script type="text/javascript">
    // $(".button-collapse").sideNav();
+   // alert("Hello");
+   
+    $(document).ready(function() {
+          $.ajax({
+            type: "POST",
+            url: "emailsent.php",
+            success: function(data){
+              if(data=="success")
+              {
+                 Materialize.toast('Mail was sent', 4000);
+              }
+              else if(data=="fail")
+              {
+                 Materialize.toast('Mail not sent', 4000);
+              }
+            }
+          })
+    });
    jQuery.noConflict();
    $('.modal-trigger').leanModal();
     function check(){
@@ -396,6 +416,7 @@
         }
       });
     }
-    setInterval(check, 2*1000);
+    setInterval(check, 10*1000);
+    
   </script>
 </html>

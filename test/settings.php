@@ -50,7 +50,7 @@
   </head>
   <!-- [END csslink] -->
   <body>
-    <nav class="cyan lighten-3">
+    <nav class="black">
       <div class="nav-wrapper">
         <a href="index.php" class="brand-logo center">Motherbee</a>
         <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
